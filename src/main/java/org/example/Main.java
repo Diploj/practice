@@ -16,9 +16,6 @@ public class Main {
     * При рождении новых существ их характеристики могут немного откланяться от родительских.*/
     public static void main(String[] args) {
         World world = new World(20,10);
-        world.getPlants().add(new Plant(new Point(1,1)));
-        world.getPlants().add(new Plant(new Point(9,13)));
-        world.getPlants().add(new Plant(new Point(9,10)));
         world.getHares().add(new Hare(2,3,new Point(14,4)));
         world.getHares().add(new Hare(2,3,new Point(6,4)));
         world.getWolves().add(new Wolf(2,4,new Point(10,7)));
