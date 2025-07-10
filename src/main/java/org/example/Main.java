@@ -15,7 +15,7 @@ public class Main {
     * границы, которого существо оказывается на другой стороне.
     * При рождении новых существ их характеристики могут немного откланяться от родительских.*/
     public static void main(String[] args) {
-        World world = new World(20);
+        World world = new World(20,10);
         world.getPlants().add(new Plant(new Point(1,1)));
         world.getPlants().add(new Plant(new Point(9,13)));
         world.getPlants().add(new Plant(new Point(9,10)));
