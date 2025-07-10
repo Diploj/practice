@@ -12,6 +12,7 @@ import java.util.Random;
 
 public class World {
     private int size;
+    private int countPlants;
     private Random random = new Random();
     private List<Plant> plants;
     private List<Hare> hares;
@@ -20,9 +21,10 @@ public class World {
     private int age;
 
 
-    public World(int size) {
+    public World(int size,int countPlants){
         this.size = size;
         this.age = 0;
+        this.countPlants = countPlants;
         plants = new ArrayList<>();
         hares = new ArrayList<>();
         wolves = new ArrayList<>();
@@ -31,6 +33,7 @@ public class World {
 
     public void nextDay() {
         age++;
+        spawnPlants();
         for (Wolf wolf : wolves) {
             wolf.action(this);
         }
@@ -90,6 +93,15 @@ public class World {
         System.out.println("Растения: " + plants.size());
         System.out.println("Зайцы: " + hares.size());
         System.out.println("Волки: " + wolves.size());
+    }
+
+    private void spawnPlants(){
+        for(int i = 0;i<countPlants;++i){
+            plants.add(new Plant(new Point(
+                    random.nextInt(size),
+                    random.nextInt(size)
+            )));
+        }
     }
 
 
