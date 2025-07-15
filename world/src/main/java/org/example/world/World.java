@@ -3,7 +3,8 @@ package org.example.world;
 import org.example.entities.Hare;
 import org.example.entities.Plant;
 import org.example.entities.Wolf;
-
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +12,9 @@ import java.util.Random;
 
 
 public class World {
+    private static final Logger log = LogManager.getLogger(World.class);
     private int size;
+    private int countPlants;
     private Random random = new Random();
     private List<Plant> plants;
     private List<Hare> hares;
@@ -20,9 +23,11 @@ public class World {
     private int age;
 
 
-    public World(int size) {
+    public World(int size,int countPlants) {
+        log.info("Creating new world");
         this.size = size;
         this.age = 0;
+        this.countPlants = countPlants;
         plants = new ArrayList<>();
         hares = new ArrayList<>();
         wolves = new ArrayList<>();
@@ -31,6 +36,8 @@ public class World {
 
     public void nextDay() {
         age++;
+        log.info("Start day " + age);
+        spawnPlants();
         for (Wolf wolf : wolves) {
             wolf.action(this);
         }
@@ -53,6 +60,9 @@ public class World {
         if (wolves.size() > 1000) {
             wolves = wolves.subList(0, 500);
         }
+        log.info("Count wolves: " + wolves.size());
+        log.info("Count hares: " + hares.size());
+        log.info("Count plants: " + plants.size());
     }
 
     public void draw() {
@@ -78,7 +88,6 @@ public class World {
 
         System.out.println("\nДень " + age + "\n");
 
-        // Рисуем сетку
         for (int y = 0; y < size; y++) {
             for (int x = 0; x < size; x++) {
                 System.out.print(grid[y][x] + " ");
@@ -92,6 +101,14 @@ public class World {
         System.out.println("Волки: " + wolves.size());
     }
 
+    private void spawnPlants(){
+        for(int i = 0;i<countPlants;++i){
+            plants.add(new Plant(new Point(
+                    random.nextInt(size),
+                    random.nextInt(size)
+            )));
+        }
+    }
 
     public List<Plant> getPlants() {
         return plants;
