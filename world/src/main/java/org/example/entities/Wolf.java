@@ -7,19 +7,22 @@ import java.awt.*;
 import java.util.List;
 import java.util.Random;
 
-public class Wolf{
+public class Wolf {
     private int health;
     private int hunger;
     private int visibleRange;
     private int speed;
+    private int age;
+    private static final int MEDIAN_DEATH_AGE = 15;
     private Point position;
 
-    public Wolf(int speed,int visibleRange,Point position) {
+    public Wolf(int speed, int visibleRange, Point position) {
+        this.age = 0;
         this.health = 60;
-        if(speed < 0) {
+        if (speed < 0) {
             speed = 0;
         }
-        if(visibleRange < 0) {
+        if (visibleRange < 0) {
             visibleRange = 0;
         }
         this.speed = speed;
@@ -28,30 +31,31 @@ public class Wolf{
         this.position = position;
     }
 
-    public void action(World world){
+    public void action(World world) {
+        age++;
+        if (age > MEDIAN_DEATH_AGE) {
+            health -= (age - MEDIAN_DEATH_AGE) * 10;
+        }
         int size = world.getSize();
-        Hare target = findFood(world.getHares(),size);
-        if(target != null)
-        {
-            if(tryMove(target.getPosition(),size)) {
+        Hare target = findFood(world.getHares(), size);
+        if (target != null) {
+            if (tryMove(target.getPosition(), size)) {
                 world.getHares().remove(target);
                 health += 50;
             }
-        }
-        else {
+        } else {
             Random random = world.getRandom();
-            tryMove(new Point(random.nextInt(size),random.nextInt(size)),size);
+            tryMove(new Point(random.nextInt(size), random.nextInt(size)), size);
             health -= hunger;
-            if(health < 0){
-                world.getChanges().add(() -> world.getWolves().remove(this));
-            }
-
         }
-        if(health > 100){
+        if (health > 200) {
             world.getChanges().add(() -> giveBirth(world));
             health = 70;
         }
-    };
+        if (health < 0) {
+            world.getChanges().add(() -> world.getWolves().remove(this));
+        }
+    }
 
     private Hare findFood(List<Hare> hares, int size){
         Hare target = null;

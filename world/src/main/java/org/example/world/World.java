@@ -51,15 +51,9 @@ public class World {
             change.run();
         }
         changes.clear();
-        if (plants.size() > 10000) {
-            plants = plants.subList(0, 7000);
-        }
-        if (hares.size() > 4000) {
-            hares = hares.subList(0, 3000);
-        }
-        if (wolves.size() > 1000) {
-            wolves = wolves.subList(0, 500);
-        }
+        trimList(plants, 10000, 7000);
+        trimList(hares, 4000, 3000);
+        trimList(wolves, 1000, 500);
         log.info("Count wolves: " + wolves.size());
         log.info("Count hares: " + hares.size());
         log.info("Count plants: " + plants.size());
@@ -110,6 +104,12 @@ public class World {
         }
     }
 
+    private void trimList(List<?> list, int maxSize, int trimTo) {
+        if (list.size() > maxSize) {
+            list.subList(trimTo, list.size()).clear();
+        }
+    }
+
     public List<Plant> getPlants() {
         return plants;
     }
@@ -132,5 +132,13 @@ public class World {
 
     public List<Runnable> getChanges() {
         return changes;
+    }
+
+    public int getCountPlants() {
+        return countPlants;
+    }
+
+    public int getAge() {
+        return age;
     }
 }
