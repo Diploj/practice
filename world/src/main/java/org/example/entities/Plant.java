@@ -14,7 +14,7 @@ public class Plant{
         this.position = position;
     }
     public void action(World world){
-       health += 10;
+       health += 15;
         if(health > 100){
             world.getChanges().add(() -> giveBirth(world));
             health = 40;

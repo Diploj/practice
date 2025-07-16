@@ -10,7 +10,7 @@ public class CordUtil {
             x -= size;
         }
         else{
-            if(x < -size/2){
+            if(x < -size / 2){
                 x += size;
             }
         }
@@ -18,7 +18,7 @@ public class CordUtil {
             y -= size;
         }
         else{
-            if(y < -size/2){
+            if(y < -size / 2){
                 y += size;
             }
         }
