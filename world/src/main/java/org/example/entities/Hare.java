@@ -12,9 +12,12 @@ public class Hare{
     private int hunger;
     private int visibleRange;
     private int speed;
+    private int age;
+    private static final int MEDIAN_DEATH_AGE = 7;
     private Point position;
 
     public Hare(int speed, int visibleRange, Point position) {
+        this.age = 0;
         this.health = 50;
         if(speed < 0) {
             speed = 0;
@@ -29,6 +32,10 @@ public class Hare{
     }
 
     public void action(World world) {
+        age++;
+        if(age > MEDIAN_DEATH_AGE) {
+            health -= (age - MEDIAN_DEATH_AGE) * 5;
+        }
         int size = world.getSize();
         Plant target = findFood(world.getPlants(), size);
         Wolf enemy = findEnemy(world.getWolves(), size);
@@ -45,19 +52,16 @@ public class Hare{
                 Random random = world.getRandom();
                 tryMove(new Point(random.nextInt(size), random.nextInt(size)), size);
                 health -= hunger;
-                if (health < 0) {
-                    world.getChanges().add(() -> world.getHares().remove(this));
-                }
-
             }
             if (health > 100) {
                 world.getChanges().add(() -> giveBirth(world));
-                health = 70;
+                health -= 40;
             }
         }
+        if (health < 0) {
+            world.getChanges().add(() -> world.getHares().remove(this));
+        }
     }
-
-    ;
 
     private Plant findFood(List<Plant> plants, int size) {
         Plant target = null;
@@ -128,8 +132,6 @@ public class Hare{
                 position
         ));
     }
-
-    ;
 
     public Point getPosition() {
         return position;
