@@ -11,22 +11,22 @@ class CordUtilTest {
         Point p1 = new Point(1, 1);
         Point p2 = new Point(3, 2);
         Point trajectory = CordUtil.trajectory(p1,p2,10);
-        Assertions.assertEquals(trajectory.x,p2.x-p1.x);
-        Assertions.assertEquals(trajectory.y,p2.y-p1.y);
+        Assertions.assertEquals(p2.x-p1.x,trajectory.x);
+        Assertions.assertEquals(p2.y-p1.y,trajectory.y);
     }
     @Test
     void trajectoryWithCrossingTheBorderTest() {
         Point p1 = new Point(1, 1);
         Point p2 = new Point(9, 9);
         Point trajectory = CordUtil.trajectory(p1,p2,10);
-        Assertions.assertEquals(trajectory.x,-2);
-        Assertions.assertEquals(trajectory.y,-2);
+        Assertions.assertEquals(-2,trajectory.x);
+        Assertions.assertEquals(-2,trajectory.y);
     }
 
     @Test
-    void distant() {
+    void distantTest() {
         Point trajectory = new Point(3, 4);
         int distantSquares = CordUtil.distant(trajectory);
-        Assertions.assertEquals(distantSquares,25);
+        Assertions.assertEquals(25,distantSquares);
     }
 }

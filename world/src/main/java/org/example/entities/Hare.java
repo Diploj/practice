@@ -36,7 +36,7 @@ public class Hare{
         if(age > MEDIAN_DEATH_AGE) {
             health -= (age - MEDIAN_DEATH_AGE) * 5;
         }
-        int size = world.getSize();
+        int size =  world.getSize();
         Plant target = findFood(world.getPlants(), size);
         Wolf enemy = findEnemy(world.getWolves(), size);
         if (enemy != null && health > 2 * hunger) {
