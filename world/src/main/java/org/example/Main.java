@@ -1,7 +1,6 @@
 package org.example;
 
 import org.example.entities.Hare;
-import org.example.entities.Plant;
 import org.example.entities.Wolf;
 import org.example.world.World;
 
@@ -15,7 +14,7 @@ public class Main {
     * границы, которого существо оказывается на другой стороне.
     * При рождении новых существ их характеристики могут немного откланяться от родительских.*/
     public static void main(String[] args) {
-        World world = new World(20,10);
+        World world = new World(15,10);
         world.getHares().add(new Hare(2,3,new Point(14,4)));
         world.getHares().add(new Hare(2,3,new Point(6,4)));
         world.getWolves().add(new Wolf(2,4,new Point(10,7)));
